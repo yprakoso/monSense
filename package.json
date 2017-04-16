@@ -1,0 +1,22 @@
+{
+  "name": "monsense",
+  "version": "1.0.0",
+  "description": "real-time chart",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yprakoso/monSense.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yprakoso/monSense/issues"
+  },
+  "homepage": "https://github.com/yprakoso/monSense#readme",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}
