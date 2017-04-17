@@ -3,8 +3,13 @@
 <head>
   <title>monSense | Main Page</title>
   <script src="/socket.io/socket.io.js"></script>
+  <script src="jquery-3.1.1.min.js"></script>
   <script src="jquery.canvasjs.min.js"></script>
   <script type="text/javascript">
+  var socket = io.connect('http://localhost:3000');
+
+
+
   window.onload = function () {
 
     var dps = []; // dataPoints
@@ -22,46 +27,33 @@
     var xVal = 0;
     var yVal = 100;
     var updateInterval = 100;
-    var dataLength = 500; // number of dataPoints visible at any point
 
-    var updateChart = function (count) {
-      count = count || 1;
-      // count is number of times loop runs to generate random dataPoints.
+    var generateNewData = function() {
+      yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
+      socket.emit('newData', {x: xVal, y: yVal} );
+      xVal++;
+    }
 
-      for (var j = 0; j < count; j++) {
-        yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
-        dps.push({
-          x: xVal,
-          y: yVal
-        });
-        xVal++;
-      };
-      if (dps.length > dataLength)
+    socket.on('updateData', function (data) {
+      // console.log(data.data.y);
+      dps.push({
+        x: data.data.x,
+        y: data.data.y
+      });
+
+      if (dps.length > 50)
       {
         dps.shift();
       }
 
       chart.render();
 
-    };
+    });
 
-    // generates first set of dataPoints
-    updateChart(dataLength);
-
-    // update chart after specified time.
-    setInterval(function(){updateChart()}, updateInterval);
+    setInterval(function(){generateNewData()}, updateInterval);
 
   }
 
-  var socket = io.connect('http://localhost:3000');
-  socket.emit('newData', function (data) {
-    console.log("newData");
-    socket.emit('my other event', { my: 'data' });
-  });
-  socket.on('updateData', function (data) {
-    console.log("updateData");
-    socket.emit('my other event', { my: 'data' });
-  });
   </script>
 </head>
 <body>

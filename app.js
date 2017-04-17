@@ -19,7 +19,7 @@ app.get('/', function(req, res) {
 io.on('connection', function(client){
   console.log("Client connected");
   client.on('newData', function(data){
-    console.log(data);
+    //console.log(data);
     io.emit("updateData", { data });
   });
   client.on('disconnect', function(){
