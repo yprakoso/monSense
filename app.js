@@ -18,7 +18,10 @@ app.get('/', function(req, res) {
 
 io.on('connection', function(client){
   console.log("Client connected");
-  client.on('event', function(data){});
+  client.on('newData', function(data){
+    console.log(data);
+    io.emit("updateData", { data });
+  });
   client.on('disconnect', function(){
     console.log("Client disconnected");
   });

@@ -54,10 +54,14 @@
   }
 
   var socket = io.connect('http://localhost:3000');
-    socket.on('news', function (data) {
-      console.log("connected");
-      socket.emit('my other event', { my: 'data' });
-    });
+  socket.emit('newData', function (data) {
+    console.log("newData");
+    socket.emit('my other event', { my: 'data' });
+  });
+  socket.on('updateData', function (data) {
+    console.log("updateData");
+    socket.emit('my other event', { my: 'data' });
+  });
   </script>
 </head>
 <body>
